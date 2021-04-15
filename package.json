@@ -1,0 +1,11 @@
+{
+    "name": "validation",
+    "version": "0.1.0",
+    "type": "module",
+    "description": "JavaScript validation engine",
+    "main": "index.js",
+    "authors": [
+        "Giovane Santos <giovanesantos1999@gmail.com>"
+    ],
+    "license": "MIT"
+}
