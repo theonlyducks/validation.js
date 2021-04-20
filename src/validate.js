@@ -2,6 +2,7 @@ import { Props } from './props.js';
 import { Empty } from './empty.js';
 import { Advance } from './advance.js'
 import { Primitive } from './primitive.js';
+import { AssertError } from './AssertError.js';
 
 export class Validate {
 
@@ -11,12 +12,23 @@ export class Validate {
         this._errors = {};
         this._hasErrors = false;
         this._currentProps = null;
+        this._currentGetProps = null;
     }
 
     addKey(key) {
         this._currentProps = new Props(key);
         this._props.push(this._currentProps);
         return this;
+    }
+
+    getKey(key) {
+        for (let prop of this._props) {
+            if(prop.getKey() === key) {
+                this._currentGetProps = prop;
+                break;
+            }
+        }
+        return this._currentGetProps;
     }
 
     ofValue(value) {
@@ -83,7 +95,10 @@ export class Validate {
             }
         });
         if(this._hasErrors) {
-            throw new Error(JSON.stringify(this._errors));
+            throw new AssertError({
+                message: 'Assert error',
+                data: this._errors
+            });
         }
     }
 
@@ -94,32 +109,36 @@ export class Validate {
             this._errors[this._currentProps.getKey()] = this._currentProps.getErrorsValues();
         }
         if(this._hasErrors) {
-            throw new Error(JSON.stringify(this._errors));
+            throw new AssertError({
+                message: 'Assert error',
+                data: this._errors
+            });
         }
     }
 
     asyncAssertOne() {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             try {
                 this.assertOne();
                 resolve();
             } catch (error) {
-                reject(JSON.parse(error.message));
+                throw new AssertError({
+                    message: 'Assert error',
+                    data: this._errors
+                });
             }
         });
     }
 
 }
 
-const name = 'Giovane';
-
-const prop = new Validate();
-
-prop.ofValue(name).isString().asyncAssertOne().then(() => {
-    console.log('valid');
-}).catch(errors => {
-    console.log(errors);
-});
+// const name = 23;
+// const prop = new Validate();
+// prop.ofValue(name).isString().asyncAssertOne().then(() => {
+//     console.log('valid');
+// }).catch(errors => {
+//     console.log(errors.data);
+// });
 
 const validate = new Validate();
 validate
@@ -131,7 +150,7 @@ validate
 
 try {
     let data = {
-        age: 10,
+        age: 23,
         name: 'Giovane',
         email: 'giovanesantos1999@gmail.com',
         admin: false,
@@ -142,5 +161,8 @@ try {
     validate.assert(data);
     console.log('valid');
 } catch (error) {
-    console.log(JSON.parse(error.message));
+    console.log(error.data);
 }
+
+console.log(validate.hasErrors());
+console.log(validate.getKey('age').hasErrors());
