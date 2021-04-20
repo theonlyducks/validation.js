@@ -5,6 +5,7 @@ export class Primitive {
         isNumeric: 'This prop is not Number',
         isBoolean: 'This prop is not Boolean',
         isObject: 'This prop is not Object',
+        objectHasProperty: 'This object not have prop'
     }
 
     static isString() {
@@ -28,6 +29,15 @@ export class Primitive {
     static isObject() {
         return function(value) {
             return typeof value === 'object';
+        }
+    }
+
+    static objectHasProperty(prop) {
+        return function(value) {
+            if(typeof value === 'object') {
+                return value[prop] !== undefined;
+            }
+            return false;
         }
     }
 

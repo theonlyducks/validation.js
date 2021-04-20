@@ -1,10 +1,13 @@
 import { Props } from './props.js';
+import { Empty } from './empty.js';
+import { Advance } from './advance.js'
 import { Primitive } from './primitive.js';
 
 export class Validate {
 
     constructor() {
         this._props = [];
+        this._value = null;
         this._errors = {};
         this._hasErrors = false;
         this._currentProps = null;
@@ -16,10 +19,19 @@ export class Validate {
         return this;
     }
 
+    ofValue(value) {
+        this._value = value;
+        this._currentProps = new Props([value]);
+        return this;
+    }
+
     required() {
-        this._currentProps.pushValidator('required', 'This prop is required', function(value) {
-            return value !== undefined;
-        });
+        this._currentProps.pushValidator('required', Empty.MESSAGES.isUndefined, Empty.isUndefined());
+        return this;
+    }
+
+    notEmpty() {
+        this._currentProps.pushValidator('isEmpty', Empty.MESSAGES.isEmpty, Empty.isEmpty());
         return this;
     }
 
@@ -48,25 +60,13 @@ export class Validate {
         return this;
     }
 
-    notEmpty() {
-        this._currentProps.pushValidator('isEmpty', 'This prop is empty', function(value) {
-            return !!value;
-        });
-        return this;
-    }
-
     isEmail() {
-        this._currentProps.pushValidator('isEmail', 'This prop is not Email', function(value) {
-            const email = /\S+@\S+\.\S+/;
-            return email.test(value);
-        });
+        this._currentProps.pushValidator('isEmail', Advance.MESSAGES.isEmail, Advance.isEmail());
         return this;
     }
 
-    isLength({ min, max }) {
-        this._currentProps.pushValidator('isLength', 'This prop not required length', function(value) {
-            return value.length >= min;
-        });
+    isLength(options) {
+        this._currentProps.pushValidator('isLength', Advance.MESSAGES.isLength, Advance.isLength(options));
         return this;
     }
 
@@ -87,19 +87,51 @@ export class Validate {
         }
     }
 
+    assertOne() {
+        this._currentProps.assertValidators({ [this._value]: this._value });
+        if(this._currentProps.hasErrors()) {
+            this._hasErrors = true;
+            this._errors[this._currentProps.getKey()] = this._currentProps.getErrorsValues();
+        }
+        if(this._hasErrors) {
+            throw new Error(JSON.stringify(this._errors));
+        }
+    }
+
+    asyncAssertOne() {
+        return new Promise((resolve, reject) => {
+            try {
+                this.assertOne();
+                resolve();
+            } catch (error) {
+                reject(JSON.parse(error.message));
+            }
+        });
+    }
+
 }
+
+const name = 'Giovane';
+
+const prop = new Validate();
+
+prop.ofValue(name).isString().asyncAssertOne().then(() => {
+    console.log('valid');
+}).catch(errors => {
+    console.log(errors);
+});
 
 const validate = new Validate();
 validate
-    .addKey('age').required().isNumeric().notEmpty()
-    .addKey('name').required().isString().isLength({ min: 5 })
+    .addKey('age').required().isNumeric().notEmpty().isLength({ min: 2, max: 4 })
+    .addKey('name').required().isString().isLength({ min: 5, max: 8 })
     .addKey('email').required().isString().isEmail()
-    .addKey('admin').required().isBoolean()
-    .addKey('cards').required().isObject().objectHasProperty('name');
+    .addKey('admin').isBoolean().notEmpty()
+    .addKey('cards').required().isObject().isLength({ min: 1 }).objectHasProperty('name');
 
 try {
     let data = {
-        age: 12,
+        age: 10,
         name: 'Giovane',
         email: 'giovanesantos1999@gmail.com',
         admin: false,
