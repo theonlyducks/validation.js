@@ -102,6 +102,20 @@ export class Validate {
         }
     }
 
+    asyncAssert(data) {
+        return new Promise(resolve => {
+            try {
+                this.assert(data);
+                resolve();
+            } catch(error) {
+                throw new AssertError({
+                    message: 'Assert error',
+                    data: this._errors
+                });
+            }
+        });
+    }
+
     assertOne() {
         this._currentProps.assertValidators({ [this._value]: this._value });
         if(this._currentProps.hasErrors()) {
@@ -148,16 +162,21 @@ validate
     .addKey('admin').isBoolean().notEmpty()
     .addKey('cards').required().isObject().isLength({ min: 1 }).objectHasProperty('name');
 
-try {
-    let data = {
-        age: 23,
-        name: 'Giovane',
-        email: 'giovanesantos1999@gmail.com',
-        admin: false,
-        cards: {
-            name: ''
-        }
+let data = {
+    age: 23,
+    name: 'Giovane',
+    email: 'giovanesantos1999@gmail.com',
+    admin: 2,
+    cards: {
+        name: ''
     }
+}
+
+validate.asyncAssert(data)
+    .then(() => console.log('Valid'))
+    .catch(errors => console.log(errors.data))
+
+try {
     validate.assert(data);
     console.log('valid');
 } catch (error) {
