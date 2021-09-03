@@ -6,6 +6,9 @@ import { AssertError } from './AssertError.js';
 
 export class Validate {
 
+    /**
+     *
+     */
     constructor() {
         this._props = [];
         this._value = null;
@@ -15,12 +18,24 @@ export class Validate {
         this._currentGetProps = null;
     }
 
+    /**
+     * Add key and create prop
+     *
+     * @param key
+     * @returns {Validate}
+     */
     addKey(key) {
         this._currentProps = new Props(key);
         this._props.push(this._currentProps);
         return this;
     }
 
+    /**
+     * Return specific props of key
+     *
+     * @param key
+     * @returns {Props}
+     */
     getKey(key) {
         for (let prop of this._props) {
             if(prop.getKey() === key) {
@@ -31,61 +46,124 @@ export class Validate {
         return this._currentGetProps;
     }
 
+    /**
+     * Create one prop
+     *
+     * @param value
+     * @returns {Validate}
+     */
     ofValue(value) {
         this._value = value;
         this._currentProps = new Props([value]);
         return this;
     }
 
+    /**
+     * Check if the property is set
+     *
+     * @returns {Validate}
+     */
     required() {
         this._currentProps.pushValidator('required', Empty.MESSAGES.isUndefined, Empty.isUndefined());
         return this;
     }
 
+    /**
+     * Check if the property is empty
+     *
+     * @returns {Validate}
+     */
     notEmpty() {
         this._currentProps.pushValidator('isEmpty', Empty.MESSAGES.isEmpty, Empty.isEmpty());
         return this;
     }
 
+    /**
+     * Check if the property is numeric
+     *
+     * @returns {Validate}
+     */
     isNumeric() {
         this._currentProps.pushValidator('isNumeric', Primitive.MESSAGES.isNumeric, Primitive.isNumeric());
         return this;
     }
 
+    /**
+     * Check if the property is string
+     *
+     * @returns {Validate}
+     */
     isString() {
         this._currentProps.pushValidator('isString', Primitive.MESSAGES.isString, Primitive.isString());
         return this;
     }
 
+    /**
+     * Check if the property is boolean
+     *
+     * @returns {Validate}
+     */
     isBoolean() {
         this._currentProps.pushValidator('isBoolean', Primitive.MESSAGES.isBoolean, Primitive.isBoolean());
         return this;
     }
 
+    /**
+     * Check if the property is object
+     *
+     * @returns {Validate}
+     */
     isObject() {
         this._currentProps.pushValidator('isObject', Primitive.MESSAGES.isObject, Primitive.isObject());
         return this;
     }
 
+    /**
+     *
+     *
+     * @param prop
+     * @returns {Validate}
+     */
     objectHasProperty(prop) {
         this._currentProps.pushValidator('objectHasProperty', Primitive.MESSAGES.objectHasProperty, Primitive.objectHasProperty(prop));
         return this;
     }
 
+    /**
+     * Check if the property is email
+     *
+     * @returns {Validate}
+     */
     isEmail() {
         this._currentProps.pushValidator('isEmail', Advance.MESSAGES.isEmail, Advance.isEmail());
         return this;
     }
 
+    /**
+     * Check if the property is max or min length
+     *
+     * @param options
+     * @returns {Validate}
+     */
     isLength(options) {
         this._currentProps.pushValidator('isLength', Advance.MESSAGES.isLength, Advance.isLength(options));
         return this;
     }
 
+    /**
+     *
+     *
+     * @returns {boolean}
+     */
     hasErrors() {
         return this._hasErrors;
     }
 
+    /**
+     *
+     *
+     * @param data
+     */
     assert(data) {
         this._props.forEach(prop => {
             prop.assertValidators(data);
@@ -102,6 +180,11 @@ export class Validate {
         }
     }
 
+    /**
+     *
+     * @param data
+     * @returns {Promise<void>}
+     */
     asyncAssert(data) {
         return new Promise(resolve => {
             try {
@@ -116,6 +199,9 @@ export class Validate {
         });
     }
 
+    /**
+     *
+     */
     assertOne() {
         this._currentProps.assertValidators({ [this._value]: this._value });
         if(this._currentProps.hasErrors()) {
@@ -130,6 +216,10 @@ export class Validate {
         }
     }
 
+    /**
+     *
+     * @returns {Promise<void>}
+     */
     asyncAssertOne() {
         return new Promise(resolve => {
             try {
@@ -145,43 +235,3 @@ export class Validate {
     }
 
 }
-
-// const name = 23;
-// const prop = new Validate();
-// prop.ofValue(name).isString().asyncAssertOne().then(() => {
-//     console.log('valid');
-// }).catch(errors => {
-//     console.log(errors.data);
-// });
-
-const validate = new Validate();
-validate
-    .addKey('age').required().isNumeric().notEmpty().isLength({ min: 2, max: 4 })
-    .addKey('name').required().isString().isLength({ min: 5, max: 8 })
-    .addKey('email').required().isString().isEmail()
-    .addKey('admin').isBoolean().notEmpty()
-    .addKey('cards').required().isObject().isLength({ min: 1 }).objectHasProperty('name');
-
-let data = {
-    age: 23,
-    name: 'Giovane',
-    email: 'giovanesantos1999@gmail.com',
-    admin: 2,
-    cards: {
-        name: ''
-    }
-}
-
-validate.asyncAssert(data)
-    .then(() => console.log('Valid'))
-    .catch(errors => console.log(errors.data))
-
-try {
-    validate.assert(data);
-    console.log('valid');
-} catch (error) {
-    console.log(error.data);
-}
-
-console.log(validate.hasErrors());
-console.log(validate.getKey('age').hasErrors());

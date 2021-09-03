@@ -1,5 +1,9 @@
 export class Props {
 
+    /**
+     *
+     * @param key
+     */
     constructor(key) {
         this._key = key;
         this._validators = [];
