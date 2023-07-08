@@ -4,7 +4,7 @@ import { Advance } from './types/Advance.mjs'
 import { Primitive } from './types/Primitive.mjs';
 import { AssertError } from './errors/AssertError.mjs';
 
-export class Validate {
+export default class Validate {
 
 	/**
 	 *

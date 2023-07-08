@@ -1,21 +1,22 @@
 import { terser } from 'rollup-plugin-terser';
 import { babel } from '@rollup/plugin-babel';
+import commonjs from "@rollup/plugin-commonjs";
 import resolve from '@rollup/plugin-node-resolve';
 
 import packageJson from './package.json' assert { type: 'json' };
 
 export default {
-	input: 'src/index.mjs',
+	input: packageJson.main,
 	output: [
 		{
 			name: packageJson.name,
-			file: packageJson.main,
+			file: './dist/validation.cjs.js',
 			format: 'cjs',
 			exports: 'auto'
 		},
 		{
 			name: packageJson.name,
-			file: packageJson.module,
+			file: './dist/validation.esm.js',
 			format: 'esm'
 		}
 	],
@@ -24,6 +25,7 @@ export default {
 		babel({
 			babelHelpers: 'bundled',
 		}),
+		commonjs(),
 		terser({
 			compress: {
 				drop_console: true,

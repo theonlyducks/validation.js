@@ -1,4 +1,4 @@
-import {Validate} from '../src/index.js';
+import Validate from '../src/Validate.mjs';
 
 const name = 'Giovane';
 const prop = new Validate();
