@@ -1,8 +1,8 @@
-import { Props } from './props.js';
-import { Empty } from './types/Empty.js';
-import { Advance } from './types/Advance.js'
-import { Primitive } from './types/Primitive.js';
-import { AssertError } from './errors/AssertError.js';
+import { Props } from './Props.mjs';
+import { Empty } from './types/Empty.mjs';
+import { Advance } from './types/Advance.mjs'
+import { Primitive } from './types/Primitive.mjs';
+import { AssertError } from './errors/AssertError.mjs';
 
 export class Validate {
 

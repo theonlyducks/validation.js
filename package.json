@@ -1,20 +1,44 @@
 {
-	"name": "validation",
-	"version": "0.1.0",
+	"name": "validation.js",
+	"title": "Validation.js",
+	"version": "1.0.0-beta",
 	"type": "module",
 	"description": "JavaScript validation engine",
-	"main": "src/index.js",
 	"authors": [
 		"Giovane Santos <giovanesantos1999@gmail.com>"
 	],
 	"license": "MIT",
+	"main": "./dist/validation.cjs.js",
+	"module": "./dist/validation.esm.js",
 	"scripts": {
-		"test": "NODE_OPTIONS=--experimental-vm-modules jest"
+		"test": "NODE_OPTIONS=--experimental-vm-modules jest",
+		"build": "rollup -c"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/giovanesantossilva/validation.js.git"
+	},
+	"bugs": {
+		"url": "https://github.com/giovanesantossilva/validation.js/issues"
+	},
+	"files": [
+		"dist",
+		"LICENSE",
+		"README.md",
+		"package.json"
+	],
+	"keywords": [
+		"validation",
+		"validator"
+	],
 	"devDependencies": {
-		"jest": "^29.6.1"
-	},
-	"dependencies": {
-		"@types/jest": "^29.5.2"
+		"@babel/core": "^7.22.8",
+		"@babel/preset-env": "^7.22.7",
+		"@rollup/plugin-babel": "^6.0.3",
+		"@rollup/plugin-node-resolve": "^15.1.0",
+		"@types/jest": "^29.5.2",
+		"jest": "^29.6.1",
+		"rollup": "^3.26.2",
+		"rollup-plugin-terser": "^7.0.2"
 	}
 }
