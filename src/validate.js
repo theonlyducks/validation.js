@@ -1,8 +1,8 @@
-import {Props} from './props.js';
-import {Empty} from './empty.js';
-import {Advance} from './advance.js'
-import {Primitive} from './primitive.js';
-import {AssertError} from './AssertError.js';
+import { Props } from './props.js';
+import { Empty } from './types/Empty.js';
+import { Advance } from './types/Advance.js'
+import { Primitive } from './types/Primitive.js';
+import { AssertError } from './errors/AssertError.js';
 
 export class Validate {
 
@@ -185,18 +185,15 @@ export class Validate {
 	 * @param data
 	 * @returns {Promise<void>}
 	 */
-	asyncAssert(data) {
-		return new Promise(resolve => {
-			try {
-				this.assert(data);
-				resolve();
-			} catch (error) {
-				throw new AssertError({
-					message: 'Assert error',
-					data: this._errors
-				});
-			}
-		});
+	async asyncAssert(data) {
+		try {
+			this.assert(data);
+		} catch (error) {
+			throw new AssertError({
+				message: 'Assert error',
+				data: this._errors
+			});
+		}
 	}
 
 	/**
@@ -220,18 +217,15 @@ export class Validate {
 	 *
 	 * @returns {Promise<void>}
 	 */
-	asyncAssertOne() {
-		return new Promise(resolve => {
-			try {
-				this.assertOne();
-				resolve();
-			} catch (error) {
-				throw new AssertError({
-					message: 'Assert error',
-					data: this._errors
-				});
-			}
-		});
+	async asyncAssertOne() {
+		try {
+			this.assertOne();
+		} catch (error) {
+			throw new AssertError({
+				message: 'Assert error',
+				data: this._errors
+			});
+		}
 	}
 
 }

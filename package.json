@@ -7,5 +7,14 @@
 	"authors": [
 		"Giovane Santos <giovanesantos1999@gmail.com>"
 	],
-	"license": "MIT"
+	"license": "MIT",
+	"scripts": {
+		"test": "NODE_OPTIONS=--experimental-vm-modules jest"
+	},
+	"devDependencies": {
+		"jest": "^29.6.1"
+	},
+	"dependencies": {
+		"@types/jest": "^29.5.2"
+	}
 }
