@@ -1,4 +1,4 @@
-import Validate from '../src/validate.js';
+import Validate, { AssertError } from '../src/validate.js';
 
 describe('Validate Component', function () {
 
@@ -105,7 +105,7 @@ describe('Validate Component', function () {
 
 		it('should be able invalid require', function () {
 			expect(function () {
-				const user = { id: 1 };
+				const user = { };
 				const validate = new Validate();
 				validate.addKey('name').required();
 				validate.assert(user);
@@ -166,6 +166,20 @@ describe('Validate Component', function () {
 				prop.ofValue(name).isLength({ min: 1, max: 6 });
 				prop.assertOne();
 			}).toThrow(new Error("Assert error"));
+		});
+
+	});
+
+
+	describe('Assert Error Type', function () {
+
+		it.only('should be able a instance a custom error', () => {
+			expect(function () {
+				const user = { };
+				const validate = new Validate();
+				validate.addKey('name').required();
+				validate.assert(user);
+			}).toThrow(AssertError);
 		});
 
 	});

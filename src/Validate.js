@@ -4,6 +4,7 @@ import { Advance } from './types/Advance.js'
 import { Primitive } from './types/Primitive.js';
 import { AssertError } from './errors/AssertError.js';
 
+export { AssertError };
 export default class Validate {
 
 	/**
@@ -160,7 +161,7 @@ export default class Validate {
 	}
 
 	/**
-	 *
+	 * @throws AssertError
 	 *
 	 * @param data
 	 */
@@ -181,6 +182,7 @@ export default class Validate {
 	}
 
 	/**
+	 * @throws AssertError
 	 *
 	 * @param data
 	 * @returns {Promise<void>}
@@ -197,7 +199,7 @@ export default class Validate {
 	}
 
 	/**
-	 *
+	 * @throws AssertError
 	 */
 	assertOne() {
 		this._currentProps.assertValidators({[this._value]: this._value});
@@ -210,6 +212,7 @@ export default class Validate {
 	}
 
 	/**
+	 * @throws AssertError
 	 *
 	 * @returns {Promise<void>}
 	 */
