@@ -11,7 +11,7 @@ See
 ### Installation
 
 ```shell
-yarn add valitaion.js
+yarn add @theonlyducks/valitaion.js
 ```
 
 ### Usage

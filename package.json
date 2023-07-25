@@ -1,8 +1,9 @@
 {
-	"name": "validation.js",
+	"name": "@theonlyducks/validation.js",
 	"title": "Validation.js",
 	"version": "1.0.0-beta",
 	"type": "module",
+	"private": false,
 	"description": "JavaScript validation engine",
 	"authors": [
 		"Giovane Santos <giovanesantos1999@gmail.com>"
