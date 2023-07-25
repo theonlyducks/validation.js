@@ -1,8 +1,8 @@
 export class Advance {
 
 	static MESSAGES = {
-		isEmail: 'This prop is not Email',
-		isLength: 'This prop not required length'
+		isEmail: 'this prop is not Email',
+		isLength: 'this prop not required length'
 	}
 
 	static isEmail() {

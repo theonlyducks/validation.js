@@ -104,11 +104,12 @@ describe('Validate Component', function () {
 		});
 
 		it('should be able invalid require', function () {
-			const user = { };
-			const validate = new Validate();
-			validate.addKey('name').required();
-			validate.assert(user);
-			expect(validate.hasErrors()).toBeFalsy();
+			expect(function () {
+				const user = { id: 1 };
+				const validate = new Validate();
+				validate.addKey('name').required();
+				validate.assert(user);
+			}).toThrow(new Error("Assert error"));
 		});
 
 		it('should be able valid not empty', function () {

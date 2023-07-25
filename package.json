@@ -1,7 +1,7 @@
 {
 	"name": "@theonlyducks/validation.js",
 	"title": "Validation.js",
-	"version": "1.0.1-beta",
+	"version": "1.0.3-beta",
 	"private": false,
 	"description": "JavaScript validation engine",
 	"authors": [

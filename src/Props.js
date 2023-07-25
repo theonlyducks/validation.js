@@ -76,15 +76,16 @@ export class Props {
 	assertValidators(data) {
 		this._validators.forEach(item => {
 			let valid = true;
-			if (!this._required && data[this._key] !== undefined) {
+			if (data[this._key] === undefined) {
+				this._required = true;
+				valid = false;
+			}
+			if (data[this._key] !== undefined) {
 				valid = item.func(data[this._key], typeof data[this._key]);
 			}
 			if (!valid) {
 				this._hasErrors = true;
 				this._errors[item.id] = item.text;
-			}
-			if (!valid && item.id === 'required') {
-				this._required = true;
 			}
 		})
 	}
