@@ -1,10 +1,10 @@
 export class Primitive {
 
 	static MESSAGES = {
-		isString: 'This prop is not String',
-		isNumeric: 'This prop is not Number',
-		isBoolean: 'This prop is not Boolean',
-		isObject: 'This prop is not Object',
+		isString: 'this prop is not String',
+		isNumeric: 'this prop is not Number',
+		isBoolean: 'this prop is not Boolean',
+		isObject: 'this prop is not Object',
 		objectHasProperty: 'This object not have prop'
 	}
 

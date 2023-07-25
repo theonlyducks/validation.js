@@ -1,8 +1,8 @@
 export class Empty {
 
 	static MESSAGES = {
-		isEmpty: 'This prop is empty',
-		isUndefined: 'This prop is required'
+		isEmpty: 'this prop is empty',
+		isUndefined: 'this prop is required'
 	}
 
 	static isEmpty() {
