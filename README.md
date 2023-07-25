@@ -25,8 +25,8 @@ props.ofValue(name).isString().isEmail();
 
 try {
     props.assertOne();
-	console.log('valid');
+    console.log('valid');
 } catch (error) {
-	console.error('errors', errors.data);
+    console.error('errors', errors.data);
 }
 ```

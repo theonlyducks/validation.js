@@ -201,16 +201,12 @@ export default class Validate {
 	 */
 	assertOne() {
 		this._currentProps.assertValidators({[this._value]: this._value});
-		if (this._currentProps.hasErrors()) {
-			this._hasErrors = true;
-			this._errors[this._currentProps.getKey()] = this._currentProps.getErrorsValues();
-		}
-		if (this._hasErrors) {
-			throw new AssertError({
-				message: 'Assert error',
-				data: this._errors
-			});
-		}
+		if (!this._currentProps.hasErrors()) return;
+		this._errors[this._currentProps.getKey()] = this._currentProps.getErrorsValues();
+		throw new AssertError({
+			message: 'Assert error',
+			data: this._errors
+		});
 	}
 
 	/**
