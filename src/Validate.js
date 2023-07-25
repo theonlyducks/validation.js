@@ -5,6 +5,7 @@ import { Primitive } from './types/Primitive.js';
 import { AssertError } from './errors/AssertError.js';
 
 export { AssertError };
+
 export default class Validate {
 
 	/**

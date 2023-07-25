@@ -173,7 +173,7 @@ describe('Validate Component', function () {
 
 	describe('Assert Error Type', function () {
 
-		it.only('should be able a instance a custom error', () => {
+		it('should be able a instance a custom error', () => {
 			expect(function () {
 				const user = { };
 				const validate = new Validate();
