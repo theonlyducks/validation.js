@@ -17,8 +17,8 @@ export default class Validate {
 	isEmail(): Validate;
 	isLength(options: { min?: number, max?: number }): Validate;
 	hasErrors(): boolean;
-	assert(): void;
-	asyncAssert(): Promise<void>;
+	assert(data: object): void;
+	asyncAssert(data: object): Promise<void>;
 	assertOne(): void;
 	asyncAssertOne(): Promise<void>;
 }

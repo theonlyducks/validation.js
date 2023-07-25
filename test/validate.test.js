@@ -1,4 +1,4 @@
-import Validate from '../src/validate.mjs';
+import Validate from '../src/validate.js';
 
 describe('Validate Component', function () {
 

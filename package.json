@@ -1,15 +1,14 @@
 {
 	"name": "@theonlyducks/validation.js",
 	"title": "Validation.js",
-	"version": "1.0.0-beta",
-	"type": "module",
+	"version": "1.0.1-beta",
 	"private": false,
 	"description": "JavaScript validation engine",
 	"authors": [
 		"Giovane Santos <giovanesantos1999@gmail.com>"
 	],
 	"license": "MIT",
-	"main": "src/Validate.mjs",
+	"main": "src/Validate.js",
 	"types": "types/index.d.ts",
 	"exports": {
 		".": {
@@ -18,7 +17,7 @@
 		}
 	},
 	"scripts": {
-		"test": "NODE_OPTIONS=--experimental-vm-modules jest",
+		"test": "jest",
 		"size": "du -hs dist/",
 		"clean": "rm -rf dist",
 		"rollup": "rollup -c",

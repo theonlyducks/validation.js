@@ -1,11 +1,11 @@
-import { terser } from 'rollup-plugin-terser';
-import { babel } from '@rollup/plugin-babel';
-import commonjs from "@rollup/plugin-commonjs";
-import resolve from '@rollup/plugin-node-resolve';
+const { terser } = require('rollup-plugin-terser');
+const { babel } = require('@rollup/plugin-babel');
+const commonjs = require("@rollup/plugin-commonjs");
+const resolve = require('@rollup/plugin-node-resolve');
 
-import packageJson from './package.json' assert { type: 'json' };
+const  packageJson = require('./package.json');
 
-export default {
+module.exports = {
 	input: packageJson.main,
 	output: [
 		{
